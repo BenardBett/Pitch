@@ -20,8 +20,7 @@ def test():
     unittest.TextTestRunner(verbosity=2).run(tests)
 
 @manager.shell
-def make_shell_context():igrate = Migrate(app,db)
-manager.add_command('db',MigrateCommand)
+def make_shell_context():
     return dict(app = app,db = db,User=User, PitchCategory=PitchCategory)
 if __name__ == '__main__':
     manager.run()
