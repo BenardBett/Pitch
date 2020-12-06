@@ -9,7 +9,7 @@ class User(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255))
     email = db.Column(db.String(255),unique = True, index =True)
-   
+    pass_secure = db.Column(db.String(255))
 
     
 
