@@ -1,6 +1,6 @@
 from app import create_app,db
 from flask_script import Manager,Server
-from app.models import PitchCategory
+from app.models import  User,PitchCategory,Pitch
 
 # Creating app instance
 app = create_app('development')
@@ -17,6 +17,6 @@ def test():
 
 @manager.shell
 def make_shell_context():
-    return dict(app = app,db = db,PitchCategory=PitchCategory)
+    return dict(app = app,db = db,User=User, PitchCategory=PitchCategory)
 if __name__ == '__main__':
     manager.run()
