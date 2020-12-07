@@ -8,34 +8,10 @@ from datetime import datetime
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-class User(UserMixin,db.Model):
-    __tablename__ = 'users'
-
-    
-    id = db.Column(db.Integer,primary_key = True)
-    username = db.Column(db.String(255))
-    email = db.Column(db.String(255),unique = True, index =True)
-    password_hash = db.Column(db.String(255))
-    pass_secure = db.Column(db.String(255))
-    bio = db.Column(db.String(255))
-    profile_pic_path = db.Column(db.String())
-    pitches = db.relationship("Pitch", backref="user", lazy = "dynamic")
-    comment = db.relationship("Comments", backref="user", lazy = "dynamic")
-    vote = db.relationship("Votes", backref="user", lazy = "dynamic")
-
-        @property
-        def password(self):
-            raise AttributeError('You cannot read the password attribute')
-
-        @password.setter
-        def password(self, password):
-            self.pass_secure = generate_password_hash(password) 
-        def verify_password(self,password):
-            return check_password_hash(self.pass_secure,password)
 
 #create pitch categories   
 class PitchCategory(db.Model):
-    __tablename__ = 'category'
+    __tablename__ = 'categories'
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255))
     
@@ -75,7 +51,7 @@ class Pitch(db.Model):
         pitches = Pitch.query.filter_by(category_id=id).all()
         return pitches  
     
-    class Votes(db.Model):
+class Votes(db.Model):
     __tablename__='votes'
 
     id = db.Column(db. Integer, primary_key=True)
@@ -113,6 +89,30 @@ class Comments(db.Model):
         comment = Comments.query.order_by(
         Comments.time_posted.desc()).filter_by(pitches_id=id).all()
         return comment        
- 
+class User(UserMixin,db.Model):
+    __tablename__ = 'users'
+
+    
+    id = db.Column(db.Integer,primary_key = True)
+    username = db.Column(db.String(255))
+    email = db.Column(db.String(255),unique = True, index =True)
+    password_hash = db.Column(db.String(255))
+    pass_secure = db.Column(db.String(255))
+    bio = db.Column(db.String(255))
+    profile_pic_path = db.Column(db.String())
+    pitches = db.relationship("Pitch", backref="user", lazy = "dynamic")
+    comment = db.relationship("Comments", backref="user", lazy = "dynamic")
+    vote = db.relationship("Votes", backref="user", lazy = "dynamic")
+
+    @property
+    def password(self):
+        raise AttributeError('You cannot read the password attribute')
+
+    @password.setter
+    def password(self, password):
+        self.pass_secure = generate_password_hash(password) 
+    def verify_password(self,password):
+        return check_password_hash(self.pass_secure,password)
+
     def __repr__(self):
         return f'User {self.username}'

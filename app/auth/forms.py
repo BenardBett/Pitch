@@ -23,10 +23,10 @@ class LoginForm(FlaskForm):
     email = StringField('Your Email Address',validators=[Required(),Email()])
     password = PasswordField('Password',validators =[Required()])
     remember = BooleanField('Remember me')
-    submit = SubmitField('Sign In')from app import create_app
+    submit = SubmitField('Sign In')
 
-app = create_app('development')
-app.app_context().push()from app import create_app
+# app = create_app('development')
+# app.app_context().push()
 
-app = create_app('development')
-app.app_context().push()
+# app = create_app('development')
+# app.app_context().push()
