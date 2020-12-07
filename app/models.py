@@ -7,16 +7,16 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 class User(UserMixin,db.Model):
-    """ class modelling the users """
+    __tablename__ = 'users'
 
-    __tablename__='users'
-
+    
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255))
     email = db.Column(db.String(255),unique = True, index =True)
-    pass_hash = db.Column(db.String(255))
-
-   pass_secure  = db.Column(db.String(255))
+    password_hash = db.Column(db.String(255))
+    pass_secure = db.Column(db.String(255))
+    bio = db.Column(db.String(255))
+    profile_pic_path = db.Column(db.String())
 
         @property
         def password(self):
