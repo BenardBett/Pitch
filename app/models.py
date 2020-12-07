@@ -2,6 +2,7 @@ from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from . import login_manager
 from flask_login import UserMixin
+from datetime import datetime
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -18,6 +19,9 @@ class User(UserMixin,db.Model):
     pass_secure = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
+    pitches = db.relationship("Pitch", backref="user", lazy = "dynamic")
+    comment = db.relationship("Comments", backref="user", lazy = "dynamic")
+    vote = db.relationship("Votes", backref="user", lazy = "dynamic")
 
         @property
         def password(self):

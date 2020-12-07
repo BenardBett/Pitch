@@ -1,9 +1,10 @@
-from flask import render_template
-from . import authfrom flask import render_template,redirect,url_for, flash,request
+from flask import render_template,redirect,url_for, flash,request
+from . import auth
 from ..models import User
 from .forms import LoginForm,RegistrationForm
 from .. import db
 from ..email import mail_message
+from flask_login import login_user,logout_user,login_required
 
 @auth.route('/login')
 def login():
@@ -32,13 +33,15 @@ def login():
 
         flash('Invalid username or Password')
 
-    title = "watchlist login"
+    title = "pitch login"
     return render_template('auth/login.html',login_form = login_form,title=title)
 
-from flask_login import login_user,logout_user,login_required
+
 #....
+
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("main.index
+    flash('Logged out successfully')
+    return redirect(url_for("auth.login"))
