@@ -1,6 +1,7 @@
 from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from . import login_manager
+from flask_login import UserMixin
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -68,7 +69,46 @@ class Pitch(db.Model):
        
     def get_pitches(id):
         pitches = Pitch.query.filter_by(category_id=id).all()
-        return pitches          
+        return pitches  
+    
+    class Votes(db.Model):
+    __tablename__='votes'
+
+    id = db.Column(db. Integer, primary_key=True)
+    vote = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    pitches_id = db.Column(db.Integer, db.ForeignKey("pitches.id"))
+
+    def save_vote(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_votes(cls,user_id,pitches_id):
+        votes = Votes.query.filter_by(user_id=user_id, pitches_id=id).all()
+        return votes
+    
+class Comments(db.Model):
+    __tablename__ = 'comments'
+
+#adding columns
+
+    id = db.Column(db. Integer, primary_key=True)
+    comment = db.Column(db.String(255))
+    time_posted = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    pitches_id = db.Column(db.Integer, db.ForeignKey("pitches.id"))
+
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_comments(self, id):
+        comment = Comments.query.order_by(
+        Comments.time_posted.desc()).filter_by(pitches_id=id).all()
+        return comment        
  
     def __repr__(self):
         return f'User {self.username}'
