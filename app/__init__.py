@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_uploads import UploadSet,configure_uploads,IMAGES
 from flask_mail import Mail
+from flask_simplemde import SimpleMDE
 
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
@@ -17,6 +18,7 @@ mail = Mail()
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
+simple = SimpleMDE()
 
 def create_app(config_name):
 
@@ -25,6 +27,7 @@ def create_app(config_name):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config.from_object(config_options[config_name])
     mail.init_app(app)
+    simple.init_app(app)
     
     # configure UploadSet
     configure_uploads(app,photos)

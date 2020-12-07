@@ -4,7 +4,7 @@ from flask_login import login_required, current_user
 from .forms import PitchForm, CommentForm, UpdateProfile, CategoryForm
 from .. import db, photos
 from . import main
-
+import markdown2  
 
 @main.route ('/')
 def index():
@@ -73,4 +73,4 @@ def update_pic(uname):
         path = f'photos/{filename}'
         user.profile_pic_path = path
         db.session.commit()
-    return redirect(url_for('main.profile',uname=uname))
+    return redirect(url_for('main.profile',uname=uname))import markdown2  
