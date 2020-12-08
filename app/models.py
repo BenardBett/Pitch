@@ -13,7 +13,7 @@ def load_user(user_id):
 class PitchCategory(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer,primary_key = True)
-    username = db.Column(db.String(255))
+    name = db.Column(db.String(255))
     
     
     def save_category(self):
